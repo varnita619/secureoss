@@ -36,6 +36,8 @@ export const Explore = () => {
       {filesList.map((url) => {
         return <img src={url} alt="file" />;
       })}
+
+      
     </div>
   );
 };

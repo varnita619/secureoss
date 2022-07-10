@@ -9,8 +9,6 @@ export const useAuthContext = () => {
 };
 
 const AuthContextProvider = ({ children }) => {
-  // const [user, setUser] = useState(null);
-  // const [error, setError] = useState("");
 
   const signInWithGithub = () => {
     signInWithPopup(auth, new GithubAuthProvider())
