@@ -1,5 +1,4 @@
 import { useAuth } from "../Context/AuthContext";
-import {useNavigate} from "react-router-dom";
 
 export const Signup = () => {
   const { signInWithGithub } = useAuth();
