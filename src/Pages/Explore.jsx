@@ -26,12 +26,18 @@ export const Explore = () => {
     }
   };
   // https://api.snyk.io/rest/
+  // https://snyk.io/api/v1/orgs
+
+  const head = {
+    "Content-Type": "application/json",
+    Authorization: "token ac19fd59-038d-47c6-8702-cd717bfca4a5",
+  }
 
   const snykHandler = async () => {
     try {
-      const result = await axios("https://snyk.io/api/v1/orgs", {
+      const result = await axios("https://api.snyk.io/rest/", {
         headers: {
-          Authorization: "bearer ac19fd59-038d-47c6-8702-cd717bfca4a5",
+          head
         },
       });
       console.log(result);
