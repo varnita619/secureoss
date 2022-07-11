@@ -2,7 +2,6 @@ import { createContext, useContext, useState } from "react";
 import { signInWithPopup, GithubAuthProvider, signOut } from "firebase/auth";
 import { auth } from "../Config/firebase";
 import { useNavigate } from "react-router-dom";
-import { FirebaseError } from "firebase/app";
 
 export const AuthContext = createContext({});
 
@@ -29,20 +28,20 @@ const AuthContextProvider = ({ children }) => {
       });
   };
 
-  const logout = async() =>{
-    try{
-      localStorage.removeItem('token')
-      setToken("")
-      await signOut(auth)
-      navigate('/')
-    }catch(error){
-      console.error(error)
+  const logout = async () => {
+    try {
+      localStorage.removeItem("token");
+      setToken("");
+      await signOut(auth);
+      navigate("/");
+    } catch (error) {
+      console.error(error);
     }
-  }
+  };
 
   return (
     <>
-      <AuthContext.Provider value={{ signInWithGithub, logout }}>
+      <AuthContext.Provider value={{ signInWithGithub, logout,token }}>
         {children}
       </AuthContext.Provider>
     </>

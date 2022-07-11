@@ -5,7 +5,7 @@ import { useAuth } from "../Context/AuthContext";
 export const Explore = () => {
   const [userRepos, setUserRepos] = useState([]);
   const [searchUser, setSearchUser] = useState("");
-  const {logout} = useAuth();
+  const { logout } = useAuth();
 
   const token = localStorage.getItem("token");
 
@@ -25,6 +25,20 @@ export const Explore = () => {
       console.error(err);
     }
   };
+  // https://api.snyk.io/rest/
+
+  const snykHandler = async () => {
+    try {
+      const result = await axios("https://snyk.io/api/v1/orgs", {
+        headers: {
+          Authorization: "bearer ac19fd59-038d-47c6-8702-cd717bfca4a5",
+        },
+      });
+      console.log(result);
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
   return (
     <div
@@ -42,7 +56,7 @@ export const Explore = () => {
           onChange={(event) => setSearchUser(event.target.value)}
         />
         <button onClick={handleRepos}>Get Repos</button>
-
+        <h3>{searchUser}</h3>
         {userRepos.map((eachRepo, i) => {
           return (
             <div style={{ width: "55%", padding: ".5rem", margin: "1rem" }}>
@@ -62,6 +76,10 @@ export const Explore = () => {
             </div>
           );
         })}
+      </div>
+
+      <div>
+        <button onClick={snykHandler}>Snyk</button>
       </div>
 
       <div>
