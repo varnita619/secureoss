@@ -1,46 +1,30 @@
-import { useEffect, useState } from "react";
-import { v4 } from "uuid";
-import { storage } from "../Config/firebase";
-import { ref, uploadBytes, listAll, getDownloadURL } from "firebase/storage";
+import { useState } from "react";
 import axios from "axios";
 
 export const Explore = () => {
-  const [fileUpload, setFileUpload] = useState(null);
-  const [filesListUrl, setFilesListUrl] = useState([]);
   const [userRepos, setUserRepos] = useState([]);
   const [searchUser, setSearchUser] = useState("");
 
-  const fileListRef = ref(storage, "files/");
-  const uploadFile = () => {
-    if (fileUpload == null) return;
-    const fileReference = ref(storage, `files/${fileUpload.name + v4()}`);
-    uploadBytes(fileReference, fileUpload).then((snapshot) => {
-      getDownloadURL(snapshot.ref).then((url) => {
-        setFilesListUrl((prev) => [...prev, url]);
-      });
-    });
-  };
+  const token = localStorage.getItem("token");
 
-  useEffect(() => {
-    listAll(fileListRef).then((response) => {
-      response.items.forEach((item) => {
-        getDownloadURL(item).then((url) => {
-          setFilesListUrl((prev) => [...prev, url]);
-        });
-      });
-    });
-  },[]);
+  const headers = {
+    "Content-Type": "application/json",
+    Authorization: `token ${token}`,
+  };
 
   const handleRepos = async () => {
     try {
-      const result = await axios(
-        `https://api.github.com/users/${searchUser}/repos`
-      );
+      const result = await axios("https://api.github.com/user/repos", {
+        headers: headers,
+      });
+
       setUserRepos(result.data);
     } catch (err) {
       console.error(err);
     }
   };
+
+  console.log(userRepos);
 
   return (
     <div
@@ -53,23 +37,6 @@ export const Explore = () => {
       }}
     >
       <div>
-        <h2>Upload Image</h2>
-        <input
-          type="file"
-          onChange={(event) => setFileUpload(event.target.files[0])}
-        />
-        <button onClick={uploadFile}>Upload File</button>
-      </div>
-      {filesListUrl.map((url, i) => (
-        <img
-          key={i}
-          style={{ width: "10%", height: "10%" }}
-          src={url}
-          alt="file"
-        />
-      ))}
-
-      <div>
         <input
           type="text"
           onChange={(event) => setSearchUser(event.target.value)}
@@ -78,7 +45,7 @@ export const Explore = () => {
 
         {userRepos.map((eachRepo, i) => {
           return (
-            <div style={{ width: "20%", padding: ".5rem", margin: "1rem" }}>
+            <div style={{ width: "55%", padding: ".5rem", margin: "1rem" }}>
               <a
                 href={eachRepo.html_url}
                 target="_blank"
