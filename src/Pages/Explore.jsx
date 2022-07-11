@@ -1,9 +1,11 @@
 import { useState } from "react";
 import axios from "axios";
+import { useAuth } from "../Context/AuthContext";
 
 export const Explore = () => {
   const [userRepos, setUserRepos] = useState([]);
   const [searchUser, setSearchUser] = useState("");
+  const {logout} = useAuth();
 
   const token = localStorage.getItem("token");
 
@@ -23,8 +25,6 @@ export const Explore = () => {
       console.error(err);
     }
   };
-
-  console.log(userRepos);
 
   return (
     <div
@@ -62,6 +62,10 @@ export const Explore = () => {
             </div>
           );
         })}
+      </div>
+
+      <div>
+        <button onClick={logout}>Logout</button>
       </div>
     </div>
   );
