@@ -29,7 +29,7 @@ export const Explore = () => {
   // https://snyk.io/api/v1/orgs
 
   const head = {
-    "Content-Type": "application/json",
+    "Content-type": "application/json",
     Authorization: "token ac19fd59-038d-47c6-8702-cd717bfca4a5",
   }
 
