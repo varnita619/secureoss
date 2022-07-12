@@ -35,7 +35,7 @@ export const Explore = () => {
 
   const snykHandler = async () => {
     try {
-      const result = await axios("https://api.snyk.io/rest/", {
+      const result = await axios("https://snyk.io/api/v1/org/26a3b7a1-9725-41a6-8eb2-722b5058024e/projects", {
         headers: {
           head
         },
