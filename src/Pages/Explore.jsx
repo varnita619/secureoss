@@ -16,7 +16,7 @@ export const Explore = () => {
 
   const handleRepos = async () => {
     try {
-      const result = await axios("https://api.github.com/user/repos", {
+      const result = await axios("http://api.github.com/user/repos", {
         headers: headers,
       });
 
